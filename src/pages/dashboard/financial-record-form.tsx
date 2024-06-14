@@ -7,6 +7,7 @@ export const FinancialRecordForm = () => {
   const [amount, setAmount] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [paymentMethod, setPaymentMethod] = useState<string>("");
+  const [date, setPaymentDate] = useState<string>("");
   const { addRecord } = useFinancialRecords();
 
   const { user } = useUser();
@@ -34,33 +35,20 @@ export const FinancialRecordForm = () => {
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <div className="form-field">
+          <label>Date:</label>
+          <input type="datetime-local" required className="input" value={date} onChange={(e) => setPaymentDate(e.target.value)} />
+        </div>
+        <div className="form-field">
           <label>Description:</label>
-          <input
-            type="text"
-            required
-            className="input"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
+          <input type="text" required className="input" value={description} onChange={(e) => setDescription(e.target.value)} />
         </div>
         <div className="form-field">
           <label>Amount:</label>
-          <input
-            type="number"
-            required
-            className="input"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-          />
+          <input type="number" required className="input" value={amount} onChange={(e) => setAmount(e.target.value)} />
         </div>
         <div className="form-field">
           <label>Category:</label>
-          <select
-            required
-            className="input"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
+          <select required className="input" value={category} onChange={(e) => setCategory(e.target.value)}>
             <option value="">Select a Category</option>
             <option value="Food">Food</option>
             <option value="Rent">Rent</option>
@@ -72,12 +60,7 @@ export const FinancialRecordForm = () => {
         </div>
         <div className="form-field">
           <label>Payment Method:</label>
-          <select
-            required
-            className="input"
-            value={paymentMethod}
-            onChange={(e) => setPaymentMethod(e.target.value)}
-          >
+          <select required className="input" value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
             <option value="">Select a Payment Method</option>
             <option value="Credit Card">Credit Card</option>
             <option value="Cash">Cash</option>

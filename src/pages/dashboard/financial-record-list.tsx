@@ -4,6 +4,7 @@ import {
   useFinancialRecords,
 } from "../../contexts/financial-record-context";
 import { useTable, Column, CellProps, Row } from "react-table";
+import moment from "moment";
 // import { format, parseISO } from 'date-fns';
 
 interface EditableCellProps extends CellProps<FinancialRecord> {
@@ -107,13 +108,17 @@ export const FinancialRecordList = () => {
       {
         Header: "Date",
         accessor: "date",
-        Cell: (props) => (
-          <EditableCell
-            {...props}
-            updateRecord={updateCellRecord}
-            editable={false}
-          />
-        ),
+        Cell: (props) => {
+          const formattedDate = moment(props.value).format('MMMM DD, YYYY hh:mm A');
+          return (
+            <EditableCell
+              {...props}
+              value={formattedDate}
+              updateRecord={updateCellRecord}
+              editable={false}
+            />
+          );
+        },
       },
       {
         Header: "Delete",
