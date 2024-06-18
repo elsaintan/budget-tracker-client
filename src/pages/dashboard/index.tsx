@@ -11,7 +11,9 @@ export const Dashboard = () => {
   const totalMonthly = useMemo(() => {
     let totalAmount = 0;
     records.forEach((record) => {
-      totalAmount += record.amount;
+      if (record.type == 'Expenses') {
+        totalAmount += record.amount;
+      }
     });
 
     const currency = new Intl.NumberFormat('id-ID', {
@@ -23,11 +25,51 @@ export const Dashboard = () => {
     return currency.format(totalAmount);
   }, [records]);
 
+  const totalIncome = useMemo(() => {
+    let totalIncome = 0;
+    records.forEach((record) => {
+      if (record.type == 'Income') {
+        totalIncome += record.amount;
+      }
+    });
+
+    const currency = new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0, 
+      maximumFractionDigits: 0
+    });
+    return currency.format(totalIncome);
+  }, [records]);
+
+  const total = useMemo(() => {
+    let totalIncome = 0;
+    let totalExpenses = 0;
+    records.forEach((record) => {
+      if (record.type == 'Income') {
+        totalIncome += record.amount;
+      }else if(record.type == 'Expenses'){
+        totalExpenses += record.amount;
+      }
+    });
+
+    let total = totalIncome - totalExpenses;
+    const currency = new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0, 
+      maximumFractionDigits: 0
+    });
+    return currency.format(total);
+  }, [records]);
+
   return (
     <div className="dashboard-container">
       <h1> Welcome {user?.firstName}! Here Are Your Finances:</h1>
       <FinancialRecordForm />
-      <div>Total Amount {totalMonthly}</div>
+      <div>Total Income {totalIncome}</div>
+      <div>Total Expenses {totalMonthly}</div>
+      <div>Total {total}</div>
       <FinancialRecordList />
     </div>
   );

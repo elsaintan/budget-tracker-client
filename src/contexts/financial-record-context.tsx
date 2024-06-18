@@ -3,6 +3,7 @@ import { Children, createContext, useContext, useEffect, useState } from "react"
 
 export interface FinancialRecord {
   _id?: string;
+  type: string;
   userId: string;
   date: Date;
   description: string;
